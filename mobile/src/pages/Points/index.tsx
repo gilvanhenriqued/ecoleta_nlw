@@ -1,37 +1,73 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, ScrollView, Image } from 'react-native';
 import { Feather as Icon } from '@expo/vector-icons';
 import Constants from 'expo-constants';
 import { useNavigation } from '@react-navigation/native'
-import MapView from 'react-native-maps'
+import MapView, { Marker } from 'react-native-maps'
 import { SvgUri } from 'react-native-svg'
 
 const Points = () => {
-  function handleNavigateBack () {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
 
+  function handleNavigateBack () {
     navigation.goBack();
+  }
+
+  function handleNavigateToDetail () {
+    navigation.navigate('Detail'); 
   }
 
   return (
     <>
-    <View style={styles.container}>
-      <TouchableOpacity onPress={handleNavigateBack}>
-        <Icon name="arrow-left" size={20} color="#34cb79" />
-      </TouchableOpacity>
+    <ScrollView 
+      horizontal 
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ paddingHorizontal: 20 }}  
+    >
+      <View style={styles.container}>
+        <TouchableOpacity onPress={handleNavigateBack}>
+          <Icon name="arrow-left" size={20} color="#34cb79" />
+        </TouchableOpacity>
 
-      <Text style={styles.title}>Bem vindo!</Text>
-      <Text style={styles.description}>Encontre no mapa um ponto de coleta.</Text>
+        <Text style={styles.title}>Bem vindo!</Text>
+        <Text style={styles.description}>Encontre no mapa um ponto de coleta.</Text>
 
-      <View style={styles.mapContainer}>
-        <MapView style={styles.map} />
+        <View style={styles.mapContainer}>
+          <MapView 
+            style={styles.map} 
+            initialRegion={{
+              latitude: -6.5545533,
+              longitude: -36.5985937,
+              latitudeDelta: 0.014,
+              longitudeDelta: 0.014
+            }}
+          >
+            <Marker 
+              style={styles.mapMarker}
+              onPress={handleNavigateToDetail}
+              coordinate={{
+                latitude: -6.5545533,
+                longitude: -36.5985937
+              }}
+            >
+              <View style={styles.mapMarkerContainer}>
+                <Image 
+                  style={styles.mapMarkerImage} 
+                  source={{uri: 'https://helioprint.com.br/wp-content/uploads/2017/07/organizar-prateleiras-supermercado.jpg?q=60&w=400'}}
+                />
+                <Text style={styles.mapMarkerTitle}>Mercado</Text>
+              </View>
+            </Marker>
+          </MapView>
+        </View>
       </View>
-    </View>
-    <View style={styles.itemsContainer}>
-      <TouchableOpacity style={styles.item} onPress={() => {}}>
-        <SvgUri width={42} height={42} uri={} />
-      </TouchableOpacity>
-    </View>
+      <View style={styles.itemsContainer}>
+        <TouchableOpacity style={styles.item} onPress={() => {}}>
+          <SvgUri width={42} height={42} uri="http://192.168.0.102:3333/uploads/lampadas.svg" />
+          <Text style={styles.itemTitle}>Lâmpada</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
     </>
   )
 }
@@ -102,6 +138,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 16,
     marginBottom: 32,
+    paddingHorizontal: 32
   },
 
   item: {
