@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, ScrollView, Image } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, Image, SafeAreaView } from 'react-native';
 import { Feather as Icon, FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'
 import { RectButton } from 'react-native-gesture-handler';
@@ -12,7 +12,7 @@ const Detail = () => {
   }
 
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
     <View style={styles.container}>
       <TouchableOpacity onPress={handleNavigateBack}>
         <Icon name="arrow-left" size={20} color="#34cb79" />
@@ -39,7 +39,7 @@ const Detail = () => {
         <Text style={styles.buttonText}>E-mail</Text>
       </RectButton>
     </View>
-    </>
+    </SafeAreaView>
   ) 
 }
 
@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
     borderColor: '#999',
     paddingVertical: 20,
+    paddingBottom: 0,
     paddingHorizontal: 32,
     flexDirection: 'row',
     justifyContent: 'space-between'

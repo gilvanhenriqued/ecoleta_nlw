@@ -75,7 +75,8 @@ const Points = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 32,
+    padding: 32,
+    paddingBottom: 32,
     paddingTop: 20 + Constants.statusBarHeight,
   },
 
